@@ -1,0 +1,465 @@
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Symfony2 deployment checklist</title>
+        <meta name="viewport" content="width=device-width">
+        <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+
+                  <link rel="stylesheet" href="/assets/style.css">
+            </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+        <![endif]-->
+
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+                    <a class="brand" href="/">Checklist</a>
+                    <div class="nav-collapse collapse">
+                        <ul class="nav">
+                                                    </ul>
+                        <ul class="nav pull-right">
+                                                            <li class="active"><a href="/"><img src="/bundles/checkcore/img/flags/en.png" /></a></li>
+                                                            <li><a href="/fr"><img src="/bundles/checkcore/img/flags/fr.png" /></a></li>
+                                                            <li><a href="/br"><img src="/bundles/checkcore/img/flags/br.png" /></a></li>
+                                                            <li><a href="/ru"><img src="/bundles/checkcore/img/flags/ru.png" /></a></li>
+                                                            <li><a href="/it"><img src="/bundles/checkcore/img/flags/it.png" /></a></li>
+                                                            <li><a href="/tr"><img src="/bundles/checkcore/img/flags/tr.png" /></a></li>
+                                                            <li><a href="/cs"><img src="/bundles/checkcore/img/flags/cs.png" /></a></li>
+                                                            <li><a href="/pl"><img src="/bundles/checkcore/img/flags/pl.png" /></a></li>
+                                                            <li><a href="/th"><img src="/bundles/checkcore/img/flags/th.png" /></a></li>
+                                                            <li><a href="/bg"><img src="/bundles/checkcore/img/flags/bg.png" /></a></li>
+                                                    </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+
+            <div class="hero-unit">
+                <h1>Symfony2 deployment checklist</h1>
+
+            </div>
+
+          
+    <div id="list" class="accordion">
+                    <div class="accordion-group">
+                <div id="install-a-php-accelerator" class="accordion-heading">
+                    <input type="checkbox" class="item-check" />
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#list" href="#install-a-php-accelerator-desc">
+                        Install a PHP Accelerator
+                        <ul class="inline pull-right">
+                                                            <li class="label">performance</li>
+                                                    </ul>
+                    </a>
+                </div>
+                <div id="install-a-php-accelerator-desc" class="accordion-body collapse">
+                    <div class="accordion-inner">
+                        <p>Symfony2 is a flexible and powerful framework... that ends to a quite slow execution time. Of course, the prod environment is much faster than you usual dev environment, but that's not enough.</p>
+
+<p>In order to boost your application in production, it is <em>very recommended</em> to install a PHP Accelerator like APC.</p>
+
+<h3>On a dedicated server</h3>
+
+<h4>On Linux</h4>
+
+<p>To install APC on a debian-like linux distribution, simply execute:</p>
+
+<pre><code>apt-get install php-apc
+</code></pre>
+
+<p>Adapt the command to your distribution.</p>
+
+<h4>On Windows</h4>
+
+<p>Uncomment the concerned line in your <code>php.ini</code>:</p>
+
+<pre><code>extension=php_apc.dll
+</code></pre>
+
+<h4>In all cases</h4>
+
+<p>After the installation, you have to activate the extension. This is done by adding this line at the end of your <code>php.ini</code>:</p>
+
+<pre><code>[APC]
+apc.enabled=1
+</code></pre>
+
+<h3>On a shared hosting</h3>
+
+<p>If you are on a shared hosting, you must not have an SSH access. In that case, the best option is to contact the administrator. Say him it's better for its servers to have a PHP Accelerator installed.</p>
+
+<ul>
+<li><em>See <a href="http://php.net/manual/en/book.apc.php">APC on the PHP doc</a></em></li>
+</ul>
+
+                    </div>
+                </div>
+            </div>
+                    <div class="accordion-group">
+                <div id="ensure-real-secret" class="accordion-heading">
+                    <input type="checkbox" class="item-check" />
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#list" href="#ensure-real-secret-desc">
+                        Ensure real secret
+                        <ul class="inline pull-right">
+                                                            <li class="label">security</li>
+                                                    </ul>
+                    </a>
+                </div>
+                <div id="ensure-real-secret-desc" class="accordion-body collapse">
+                    <div class="accordion-inner">
+                        <p>Ensure that your production server is using a customized secret key. Check it in your <code>app/config/parameters.yml</code> file:</p>
+
+<pre><code>secret:  please_use_a_real_secret_here
+</code></pre>
+
+<p>The default secret is <em>not</em> truly secret, you <em>must</em> change it by a random one.</p>
+
+                    </div>
+                </div>
+            </div>
+                    <div class="accordion-group">
+                <div id="check-the-production-server" class="accordion-heading">
+                    <input type="checkbox" class="item-check" />
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#list" href="#check-the-production-server-desc">
+                        Check the production server
+                        <ul class="inline pull-right">
+                                                            <li class="label">basis</li>
+                                                    </ul>
+                    </a>
+                </div>
+                <div id="check-the-production-server-desc" class="accordion-body collapse">
+                    <div class="accordion-inner">
+                        <p>Before deploying your application, you have to test that your production server is ready to run it.</p>
+
+<p>To test your server you have the choice between three methods:</p>
+
+<ol>
+<li>Manually run <code>php app/check.php</code> and see what to resolve;</li>
+<li>Access the <code>config.php</code> with your browser, located in the <code>web</code> directory;</li>
+<li>If you don't have access to your server yet (you're planning to buy it), you can still go to the <a href="http://symfony.com/doc/current/reference/requirements.html">documentation reference page</a></li>
+</ol>
+
+                    </div>
+                </div>
+            </div>
+                    <div class="accordion-group">
+                <div id="use-custom-favicon" class="accordion-heading">
+                    <input type="checkbox" class="item-check" />
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#list" href="#use-custom-favicon-desc">
+                        Use Custom Favicon
+                        <ul class="inline pull-right">
+                                                            <li class="label">basis</li>
+                                                    </ul>
+                    </a>
+                </div>
+                <div id="use-custom-favicon-desc" class="accordion-body collapse">
+                    <div class="accordion-inner">
+                        <p>You don't want the Symfony logo to appear in your visitors' browser. That's why you must replace the default favicon with your own before deployment.</p>
+
+<p>Just replace the file <code>web/favicon.ico</code>.</p>
+
+<p>To make favicons, you can:</p>
+
+<ul>
+<li>Use online tools like <a href="http://www.favicon.cc">favicon.cc</a> in order to generate <code>.ico</code> files;</li>
+<li>Use a PNG icon. In that case you must define a <code>link</code> in your HTML: <code>&lt;link rel="icon" type="image/png" href="yourFavIcon.png"&gt;</code></li>
+</ul>
+
+                    </div>
+                </div>
+            </div>
+                    <div class="accordion-group">
+                <div id="configure-monolog" class="accordion-heading">
+                    <input type="checkbox" class="item-check" />
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#list" href="#configure-monolog-desc">
+                        Configure Monolog
+                        <ul class="inline pull-right">
+                                                            <li class="label">security</li>
+                                                    </ul>
+                    </a>
+                </div>
+                <div id="configure-monolog-desc" class="accordion-body collapse">
+                    <div class="accordion-inner">
+                        <p>The component generating the logs of your application is essential for managing your web platform. Symfony2 ships Monolog component dedicated to this task.</p>
+
+<p>The default configuration is OK for the development environment, but it isn't enough for production. The changes to do deal with two aims:</p>
+
+<ul>
+<li>Send errors to the website administrator by email (logs of "error" level);</li>
+<li>Record <em>all</em> authentications, as these are logs of "info" level, that are not logged by default.</li>
+</ul>
+
+<p>Let's configure Monolog thanks to <code>config_prod.yml</code>:</p>
+
+<pre><code>monolog:
+    handlers:
+        main:
+            type:               fingers_crossed
+            action_level:       error
+            handler:            grouped
+        grouped:
+            type:               group
+            members:            [streamed, swift]
+        streamed:
+            type:               stream
+            path:               "%kernel.logs_dir%/%kernel.environment%.log"
+            level:              debug
+        swift:
+            type:               swift_mailer
+            from_email:         FQN@foo.com
+            to_email:           webmaster@company.com
+            subject:            "OOps"
+            level:              debug
+        login:
+            type:               stream
+            path:               "%kernel.logs_dir%/auth.log"
+            level:              info
+            channels:           security
+</code></pre>
+
+<p>That's it!</p>
+
+<ul>
+<li><em>See <a href="http://symfony.com/doc/master/cookbook/logging/monolog.html">Symfony2 Monolog documentation</a></em></li>
+</ul>
+
+                    </div>
+                </div>
+            </div>
+                    <div class="accordion-group">
+                <div id="use-doctrine-cache" class="accordion-heading">
+                    <input type="checkbox" class="item-check" />
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#list" href="#use-doctrine-cache-desc">
+                        Use Doctrine Cache
+                        <ul class="inline pull-right">
+                                                            <li class="label">performance</li>
+                                                    </ul>
+                    </a>
+                </div>
+                <div id="use-doctrine-cache-desc" class="accordion-body collapse">
+                    <div class="accordion-inner">
+                        <p>In production environment, it is <em>highly recommended</em> to use Doctrine cache. There are two types of cache.</p>
+
+<h3>Query and Metadata Cache</h3>
+
+<ul>
+<li>The Query Cache aims at caching the transformation of a DQL query to its SQL counterpart. In production, your requests won't change a bit so why not caching them.</li>
+<li>The Metadata Cache aims at caching the parsed metadata from a few different sources like YAML, XML, Annotations, etc.</li>
+</ul>
+
+<p>Caching these information is done by setting a few parameters in your production configuration file <code>config_prod.yml</code>:</p>
+
+<pre><code>doctrine:
+    orm:
+        auto_mapping: true
+        query_cache_driver:    apc
+        metadata_cache_driver: apc
+</code></pre>
+
+<h3>Result Cache</h3>
+
+<p>The result of your queries can be cached in order not to query the database again and again. As this is a finer tuning, you can't parameter it application-wide. You can only set the driver as previously:</p>
+
+<pre><code>doctrine:
+    orm:
+        auto_mapping: true
+        result_cache_driver: apc
+</code></pre>
+
+<p>But then you have to explicitly use or not use this cache in all your majors queries. This is done by setting the name and lifetime of each query cache. See <a href="http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/caching.html#result-cache">Doctrine Result Cache documentation</a>.</p>
+
+<h3>Ensure that Doctrine is actually using your APC cache</h3>
+
+<p>You configured APC as a cache driver for Doctrine, that's great. But the problem is that the Dependency Injection Container is generated through the Command Line Interface, when cache is built from there. And if you do not have <code>apc.enable_cli = 1</code> in your <code>php.ini</code>, then the DIC will use <code>FileCacheReader</code> instead. That's not what we want.</p>
+
+<p>To check if you are really using APC cache, have a look at your <code>app/cache/prod/appProdProjectContainer.php</code>. You should see the following:</p>
+
+<pre><code>protected function getDoctrine_Orm_DefaultEntityManagerService()
+{
+    $a = $this-&gt;get('annotation_reader');
+    $b = new \Doctrine\Common\Cache\ApcCache();
+    $b-&gt;setNamespace('sf2orm_default_5cdc3404d84577b226d7772ca9818908');
+    $c = new \Doctrine\Common\Cache\ApcCache();
+    $c-&gt;setNamespace('sf2orm_default_5cdc3404d84577b226d7772ca9818908');
+
+    // ...
+
+    $g = new \Doctrine\ORM\Configuration();
+    $g-&gt;setMetadataCacheImpl($b);
+    $g-&gt;setQueryCacheImpl($c);
+
+    // ...
+}
+</code></pre>
+
+<p>If you can't find <code>\Doctrine\Common\Cache\ApcCache</code>, then you are not using APC.</p>
+
+<ul>
+<li><em>See <a href="http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/caching.html">Doctrine Cache documentation</a></em></li>
+<li><em>See <a href="http://symfony.com/doc/current/reference/configuration/doctrine.html">Symfony2 Doctrine configuration reference</a></em></li>
+<li><em>See <a href="http://gogs.info/2013/05/using-apc-cache-with-doctrine-symfony">Using APC cache with Doctrine and Symfony? Check again!</a></em></li>
+</ul>
+
+                    </div>
+                </div>
+            </div>
+                    <div class="accordion-group">
+                <div id="optimize-the-autoloader" class="accordion-heading">
+                    <input type="checkbox" class="item-check" />
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#list" href="#optimize-the-autoloader-desc">
+                        Optimize the Autoloader
+                        <ul class="inline pull-right">
+                                                            <li class="label">performance</li>
+                                                    </ul>
+                    </a>
+                </div>
+                <div id="optimize-the-autoloader-desc" class="accordion-body collapse">
+                    <div class="accordion-inner">
+                        <p>By default, Composer dumps an autoloader that isn't fully optimized. Indeed, when you have many classes, the autoloader can take up a substantial time..</p>
+
+<p>In production environment, you want the autoloader to be fast. Composer can dump an optimized autoloader that converts PSR-0 packages into classmap ones, which improves performance.</p>
+
+<p>To use the optimized autoloader, just add the <code>--optimize</code> option to the <code>dump-autoload</code> Composer command:</p>
+
+<pre><code>php composer.phar dump-autoload --optimize
+</code></pre>
+
+<p>Of course, this option makes the command a bit longer. That's why it isn't done by default.</p>
+
+<ul>
+<li><em>See <a href="http://getcomposer.org/doc/03-cli.md#dump-autoload">Composer dump-autoload documentation</a></em></li>
+</ul>
+
+                    </div>
+                </div>
+            </div>
+                    <div class="accordion-group">
+                <div id="protect-your-forms" class="accordion-heading">
+                    <input type="checkbox" class="item-check" />
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#list" href="#protect-your-forms-desc">
+                        Protect your forms
+                        <ul class="inline pull-right">
+                                                            <li class="label">security</li>
+                                                    </ul>
+                    </a>
+                </div>
+                <div id="protect-your-forms-desc" class="accordion-body collapse">
+                    <div class="accordion-inner">
+                        <p>Symfony2 Form Component automatically embeds and validate <a href="http://en.wikipedia.org/wiki/Cross-site_request_forgery">CSRF</a> tokens for you.</p>
+
+<p>Be sure to customize your secret key, which is used for the token generation, in your <code>app/config/parameters.yml</code> file:</p>
+
+<pre><code>secret:  please_use_a_real_secret_here
+</code></pre>
+
+<p>Moreover, you could customize the token on a form-by-form basis, which is even better. You can do that by defining an <code>intention</code> option in your forms:</p>
+
+<pre><code>namespace Acme\DemoBundle\Form;
+
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+
+class TaskType extends AbstractType
+{
+    // ...
+
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $resolver-&gt;setDefaults(array(
+            // a unique key to help generate the secret token
+            'intention'  =&gt; 'task_form',
+        ));
+    }
+
+    // ...
+}
+</code></pre>
+
+<ul>
+<li><em>See <a href="http://symfony.com/doc/current/book/forms.html#csrf-protection">Symfony2 Form CSRF protection documentation</a></em></li>
+<li><em>See <a href="http://en.wikipedia.org/wiki/Cross-site_request_forgery">CSRF on wikipedia</a></em></li>
+</ul>
+
+                    </div>
+                </div>
+            </div>
+                    <div class="accordion-group">
+                <div id="customize-error-pages" class="accordion-heading">
+                    <input type="checkbox" class="item-check" />
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#list" href="#customize-error-pages-desc">
+                        Customize error pages
+                        <ul class="inline pull-right">
+                                                            <li class="label">basis</li>
+                                                    </ul>
+                    </a>
+                </div>
+                <div id="customize-error-pages-desc" class="accordion-body collapse">
+                    <div class="accordion-inner">
+                        <p>If you are used to the error pages of the "dev" environment, it is hopefully not the case of your future visitors on your production website. So, you must customize the different error pages, in order to integrate them with your own layout.</p>
+
+<p>Hopefully, customizing error pages is really easy. Their views are located in the <code>TwigBundle</code> bundle, that gives you the key to override them by yours. The views you have to create are: <code>Exception/errorXXX.html.twig</code>, where <code>XXX</code> is the number of the encountered error. It is highly recommended to customize at least errors 404 and 500.</p>
+
+<p>To use your own views, there are two possible solutions:</p>
+
+<ol>
+<li>You can create a new bundle, that extends <code>TwigBundle</code>, and put your views in the directory <code>Resources/views/Exception/errorXXX.html.twig</code>. That enable you to reuse them in different projects as it is a reusable bundle;</li>
+<li>You can also simply put your views in the directory <code>app/Resources/TwigBundle/views/Exception/errorXXX.html.twig</code>. If your views are specific to the current project, it avoid you to create a new bundle just for that.</li>
+</ol>
+
+<ul>
+<li><em>See <a href="http://symfony.com/doc/master/cookbook/controller/error_pages.html">Customize error pages on Symfony documentation</a></em></li>
+</ul>
+
+                    </div>
+                </div>
+            </div>
+            </div>
+
+
+          <hr>
+
+          <footer class="row">
+              <div class="span4">
+                  <a href="https://github.com/winzou/symfony2-checklist"><img src="/bundles/checkcore/img/github.jpg" alt="GitHub"> Fork the content</a>
+              </div>
+              <div class="span4 center">
+                  winzou 2013
+              </div>
+              <div class="span4 right">
+                  -soon- Fork the website <img src="/bundles/checkcore/img/github.jpg" alt="GitHub">
+              </div>
+          </footer>
+
+        </div> <!-- /container -->
+
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="/assets/jquery.js"><\/script>')</script>
+
+                  <script src="/assets/script.js"></script>
+        
+                    <script type="text/javascript">
+              var _gaq = _gaq || [];
+              _gaq.push(['_setAccount', 'UA-8918107-12']);
+              _gaq.push(['_trackPageview']);
+
+              (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+              })();
+            </script>
+            </body>
+</html>
