@@ -28,6 +28,10 @@
     fieldset {
         font-size: 80%;
     }
+    img {
+        width: 40px;
+        height: 40px
+    }
 </style>
 
 <div class="container-fluid widget" id="search-form">
@@ -45,7 +49,7 @@
         </div>
     </div>
     <fieldset id="field-list">
-        <p class="text-success">Fields to list:</p>
+        <p class="text-success">Filter field list:</p>
         <label for="checkbox-1">Id</label>
         <input type="checkbox" name="id" id="checkbox-1">
         <label for="checkbox-2">Name</label>
@@ -55,7 +59,7 @@
         <label for="checkbox-4">City</label>
         <input type="checkbox" name="city" id="checkbox-4">
         <label for="checkbox-5">Profile picture</label>
-        <input type="checkbox" name="profilePicture" id="checkbox-5">
+        <input type="checkbox" name="profile_picture" id="checkbox-5">
     </fieldset>
     <div class="row">
         <button id="button-search" type="button" class="btn btn-primary" onclick="search();">Search</button>
@@ -115,6 +119,10 @@
         SheetApi.getSheet1("A1:AA").done(function (data) {
             var header = data.values.shift();
             var body = data.values.reduce(function (body, item) {
+                if (header.indexOf('profile_picture') >= 0) {
+                    var ix = header.indexOf('profile_picture');
+                    item[ix] = '<img src="' + item[ix] + '" class="img-thumbnail">';
+                }
                 return body
                     + "<tr><td>" + item.join('</td><td>') + "</td></tr>";
             }, "");
@@ -123,11 +131,12 @@
                 "<tr><th>" + header.join('</th><th>') + "</th></tr>"
                 + body
                 );
-//            var searchBody = $('#search-body table');
-//            $.map($('#field-list input:checked'), function (el){
-//                var th = searchBody.find('th:contains(' + el.name + ')');
-//                searchBody.find('td:eq(' + th.cellIndex + ')').hide()
-//            });
+            var searchBody = $('#search-body table');
+            $.map($('#field-list input:checked'), function (el){
+                var th = searchBody.find('th:contains(' + el.name + ')')[0];
+
+                searchBody.find('tr :nth-child(' + (th.cellIndex + 1) + 'n)').hide()
+            });
 
             container.show();
         }).fail(function () {
@@ -177,6 +186,7 @@
 </script>
 
 <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>-->
+
 ]]>
   </Content> 
 </Module>
