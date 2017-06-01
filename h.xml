@@ -3,11 +3,13 @@
   <ModulePrefs title="hello world example" /> 
   <Content type="html">
      <![CDATA[ 
-        <h1>Search Gadget</h1>
-        <input type="button" value="Search" onclick="do()">
+        <h1 id="demo">Search Gadget2</h1>
+        <input type="button" value="Search" onclick="do();">
 <script>
 
+
 function do() {
+document.getElementById("demo").innerHTML = "Hello World";
 alert();console.log('asdasd');
 }
 console.log('asd');
