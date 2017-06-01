@@ -135,7 +135,7 @@
             $.map($('#field-list input:checked'), function (el){
                 var th = searchBody.find('th:contains(' + el.name + ')')[0];
 
-                searchBody.find('tr :nth-child(' + (th.cellIndex + 1) + 'n)').hide()
+                searchBody.find('tr :nth-child(' + (th.cellIndex + 1) + ')').hide()
             });
 
             container.show();
@@ -186,7 +186,6 @@
 </script>
 
 <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>-->
-
 ]]>
   </Content> 
 </Module>
