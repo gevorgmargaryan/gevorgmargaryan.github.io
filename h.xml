@@ -3,8 +3,6 @@
   <ModulePrefs title="hello world example" /> 
   <Content type="html">
      <![CDATA[ 
-       <!DOCTYPE html>
-<html>
   <head>
     <title>Google Sheets API Quickstart</title>
     <meta charset='utf-8' />
@@ -132,7 +130,6 @@
       onreadystatechange="if (this.readyState === 'complete') this.onload()">
     </script>
   </body>
-</html>
      ]]>
   </Content> 
 </Module>
