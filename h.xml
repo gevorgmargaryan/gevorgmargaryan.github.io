@@ -4,11 +4,11 @@
   <Content type="html">
      <![CDATA[ 
         <h1 id="demo">Search Gadget2</h1>
-        <input type="button" value="Search" onclick="do();">
+        <input type="button" value="Search" onclick="search();">
 <script>
 
 
-function do() {
+function search() {
 document.getElementById("demo").innerHTML = "Hello World";
 alert();console.log('asdasd');
 }
