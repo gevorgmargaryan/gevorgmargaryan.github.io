@@ -4,16 +4,19 @@
   <Content type="html">
      <![CDATA[ 
         <h1 id="demo">Search Gadget2</h1>
-        <input type="button" value="Search" onclick="search();">
+<input type="button" value="Search" onclick="search();">
+
 <script>
+    function search() {
+        document.getElementById("demo").innerHTML = "Hello World";
+        alert($);
+        console.log($);
+    }
 
-
-function search() {
-document.getElementById("demo").innerHTML = "Hello World";
-alert();console.log('asdasd');
-}
-console.log('asd');
 </script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
       
      ]]>
   </Content> 
