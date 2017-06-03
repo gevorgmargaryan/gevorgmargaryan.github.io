@@ -145,7 +145,7 @@
 
     var CACHE = function () {
         var today = new Date();
-        var cacheKey = 'cache_' + today.getMonth() + '_' + today.getDate() + window.location.href;
+        var cacheKey = 'cache_' + today.getMonth() + '_' + today.getDate() + window.location.origin;
 
         var lsCache =  localStorage && localStorage.getItem(cacheKey);
         lsCache = lsCache && JSON.parse(lsCache);
