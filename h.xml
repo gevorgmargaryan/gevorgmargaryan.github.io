@@ -75,37 +75,37 @@
             <fieldset>
                 <p class="text-success">KOL Areas of Strategic Interest</p>
                 <label for="RawData!P">Payer Coverage and Utilization Management</label>
-                <input type="checkbox" name="RawData!P" id="RawData!P" value="Yes"/>
+                <input type="checkbox" name="P" id="RawData!P" value="Yes"/>
                 <label for="RawData!Q">Insurance Benefit Design</label>
-                <input type="checkbox" name="RawData!Q" id="RawData!Q" value="Yes"/>
+                <input type="checkbox" name="Q" id="RawData!Q" value="Yes"/>
                 <label for="RawData!R">"Big Data" and Technology Intermediaries</label>
-                <input type="checkbox" name="RawData!R" id="RawData!R" value="Yes"/>
+                <input type="checkbox" name="R" id="RawData!R" value="Yes"/>
                 <label for="RawData!S">Evolving Role of the Patient</label>
-                <input type="checkbox" name="RawData!S" id="RawData!S" value="Yes"/>
+                <input type="checkbox" name="S" id="RawData!S" value="Yes"/>
                 <label for="RawData!T">Provider Consolidation and Site of Care Shift</label>
-                <input type="checkbox" name="RawData!T" id="RawData!T" value="Yes"/>
+                <input type="checkbox" name="T" id="RawData!T" value="Yes"/>
                 <label for="RawData!U">Provider Reimbursement</label>
-                <input type="checkbox" name="RawData!U" id="RawData!U" value="Yes"/>
+                <input type="checkbox" name="U" id="RawData!U" value="Yes"/>
                 <label for="RawData!V">Evolving Views on Quality</label>
-                <input type="checkbox" name="RawData!V" id="RawData!V" value="Yes"/>
+                <input type="checkbox" name="V" id="RawData!V" value="Yes"/>
                 <label for="RawData!W">Personalized Healthcare</label>
-                <input type="checkbox" name="RawData!W" id="RawData!W" value="Yes"/>
+                <input type="checkbox" name="W" id="RawData!W" value="Yes"/>
                 <label for="RawData!X">Drug Pricing and Contracting</label>
-                <input type="checkbox" name="RawData!X" id="RawData!X" value="Yes"/>
+                <input type="checkbox" name="X" id="RawData!X" value="Yes"/>
                 <label for="RawData!Y">Biosimilars</label>
-                <input type="checkbox" name="RawData!Y" id="RawData!Y" value="Yes"/>
+                <input type="checkbox" name="Y" id="RawData!Y" value="Yes"/>
                 <label for="RawData!Z">Pathways and Guidelines</label>
-                <input type="checkbox" name="RawData!Z" id="RawData!Z" value="Yes"/>
+                <input type="checkbox" name="Z" id="RawData!Z" value="Yes"/>
                 <label for="RawData!AA">ACOs and Other Risk-Based Arrangements</label>
-                <input type="checkbox" name="RawData!AA" id="RawData!AA" value="Yes"/>
+                <input type="checkbox" name="AA" id="RawData!AA" value="Yes"/>
                 <label for="RawData!AB">340B Program Growth</label>
-                <input type="checkbox" name="RawData!AB" id="RawData!AB" value="Yes"/>
+                <input type="checkbox" name="AB" id="RawData!AB" value="Yes"/>
                 <label for="RawData!AC">Other</label>
-                <input type="checkbox" name="RawData!AC" id="RawData!AC" value="Yes"/>
+                <input type="checkbox" name="AC" id="RawData!AC" value="Yes"/>
             </fieldset>
         </div>
     </div>
-    <fieldset id="field-list">
+<!--    <fieldset id="field-list">
         <p class="text-success">Filter field list:</p>
         <label for="checkbox-1">Id</label>
         <input type="checkbox" name="id" id="checkbox-1"/>
@@ -117,7 +117,7 @@
         <input type="checkbox" name="city" id="checkbox-4"/>
         <label for="checkbox-5">Profile picture</label>
         <input type="checkbox" name="profile_picture" id="checkbox-5"/>
-    </fieldset>
+    </fieldset>-->
     <div class="row">
         <div class="col-xs-6">
             <button id="button-reset" type="button" class="btn btn-primary" onclick="reset();">Reset</button>
@@ -375,7 +375,6 @@
 </script>
 
 <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>-->
-
 
 ]]>
   </Content> 
