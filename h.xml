@@ -1,8 +1,3 @@
-<?xml version="1.0" encoding="UTF-8" ?> 
-<Module>
-  <ModulePrefs title="hello world example" /> 
-  <Content type="html">
-     <![CDATA[ 
 <!--<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">-->
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -22,7 +17,8 @@
     #search-message {
         margin-top: 50px;
     }
-    #button-search{
+    #button-search,
+    #button-reset {
         width: 100%;
     }
     fieldset {
@@ -32,20 +28,76 @@
         width: 40px;
         height: 40px
     }
-</style>
 
+    .ui-autocomplete-loading {
+        background: white url("https://jqueryui.com/resources/demos/autocomplete/images/ui-anim_basic_16x16.gif") right center no-repeat;
+    }
+    .ui-autocomplete {
+        max-height: 150px;
+        overflow-y: auto;
+        /* prevent horizontal scrollbar */
+        overflow-x: hidden;
+    }
+    /* IE 6 doesn't support max-height
+     * we use height instead, but this forces the menu to always be this tall
+     */
+    * html .ui-autocomplete {
+        height: 150px;
+    }
+</style>
 <div class="container-fluid widget" id="search-form">
-    <h1 id="demo">Search Gadget2</h1>
+    <h1 id="demo">KOL Finder</h1>
     <div class="row" >
-        <div class="col-xs-6 col-md-4 form-group">
-            <label class="control-label" for="name">Name</label>
-            <input type="text" class="form-control" id="name" aria-describedby="helpBlock2">
+        <div class="col-xs-12 col-md-6 form-group">
+            <label class="control-label" for="organization">Organization</label>
+            <input type="text" class="form-control" id="organization" aria-describedby="helpBlock2" placeholder="Start typing"
+                   name="E">
             <span id="helpBlock2" class="help-block"></span>
         </div>
-        <div class="col-xs-6 col-md-4 form-group">
-            <label class="control-label" for="phone">Phone number</label>
-            <input type="text" class="form-control" id="phone" aria-describedby="helpBlock2">
+        <div class="col-xs-6 col-md-3 form-group">
+            <label class="control-label" for="region">Region</label>
+            <input type="text" class="form-control" id="region" aria-describedby="helpBlock2" placeholder="Start typing"
+                   name="F">
             <span id="helpBlock2" class="help-block"></span>
+        </div>
+        <div class="col-xs-6 col-md-3 form-group">
+            <label class="control-label" for="region">State</label>
+            <input type="text" class="form-control" id="state" aria-describedby="helpBlock2" placeholder="Start typing"
+                   name="AX">
+            <span id="helpBlock2" class="help-block"></span>
+        </div>
+        <div class="col-xs-12">
+            <fieldset>
+                <p class="text-success">KOL Areas of Strategic Interest</p>
+                <label for="RawData!P">Payer Coverage and Utilization Management</label>
+                <input type="checkbox" name="RawData!P" id="RawData!P" value="Yes">
+                <label for="RawData!Q">Insurance Benefit Design</label>
+                <input type="checkbox" name="RawData!Q" id="RawData!Q" value="Yes">
+                <label for="RawData!R">"Big Data" and Technology Intermediaries</label>
+                <input type="checkbox" name="RawData!R" id="RawData!R" value="Yes">
+                <label for="RawData!S">Evolving Role of the Patient</label>
+                <input type="checkbox" name="RawData!S" id="RawData!S" value="Yes">
+                <label for="RawData!T">Provider Consolidation and Site of Care Shift</label>
+                <input type="checkbox" name="RawData!T" id="RawData!T" value="Yes">
+                <label for="RawData!U">Provider Reimbursement</label>
+                <input type="checkbox" name="RawData!U" id="RawData!U" value="Yes">
+                <label for="RawData!V">Evolving Views on Quality</label>
+                <input type="checkbox" name="RawData!V" id="RawData!V" value="Yes">
+                <label for="RawData!W">Personalized Healthcare</label>
+                <input type="checkbox" name="RawData!W" id="RawData!W" value="Yes">
+                <label for="RawData!X">Drug Pricing and Contracting</label>
+                <input type="checkbox" name="RawData!X" id="RawData!X" value="Yes">
+                <label for="RawData!Y">Biosimilars</label>
+                <input type="checkbox" name="RawData!Y" id="RawData!Y" value="Yes">
+                <label for="RawData!Z">Pathways and Guidelines</label>
+                <input type="checkbox" name="RawData!Z" id="RawData!Z" value="Yes">
+                <label for="RawData!AA">ACOs and Other Risk-Based Arrangements</label>
+                <input type="checkbox" name="RawData!AA" id="RawData!AA" value="Yes">
+                <label for="RawData!AB">340B Program Growth</label>
+                <input type="checkbox" name="RawData!AB" id="RawData!AB" value="Yes">
+                <label for="RawData!AC">Other</label>
+                <input type="checkbox" name="RawData!AC" id="RawData!AC" value="Yes">
+            </fieldset>
         </div>
     </div>
     <fieldset id="field-list">
@@ -62,10 +114,14 @@
         <input type="checkbox" name="profile_picture" id="checkbox-5">
     </fieldset>
     <div class="row">
-        <button id="button-search" type="button" class="btn btn-primary" onclick="search();">Search</button>
+        <div class="col-xs-6">
+            <button id="button-reset" type="button" class="btn btn-primary" onclick="reset();">Reset</button>
+        </div>
+        <div class="col-xs-6">
+            <button id="button-search" type="button" class="btn btn-primary" onclick="search();">Search</button>
+        </div>
     </div>
 </div>
-
 <div class="container-fluid" id="search-message">
     <div id="progressbar" hidden><div class="progress-label">Loading...</div></div>
 </div>
@@ -76,6 +132,55 @@
 </div>
 
 <script>
+    var API_HOST = "https://sheets.googleapis.com/v4/spreadsheets/";
+    //@TODO change key
+    var API_KEY = "AIzaSyDIs2fHGHxFLWE-O5hLdBtxhZdfx1Jjld4";
+    var SHEET_ID = "1JDo6BzfC0StJKLkYLl_g1AxHrgBWQZbjNddBI9o1N78";
+    var RAW_DATA_GIR = "1896516446";
+
+    var CACHE = function () {
+        var today = new Date();
+        var cacheKey = 'cache_' + today.getMonth() + '_' + today.getDate() + window.location.href;
+
+        var lsCache =  localStorage && localStorage.getItem(cacheKey);
+        lsCache = lsCache && JSON.parse(lsCache);
+
+        var bag = {
+            organization: {},
+            region: {},
+            state: {},
+        };
+        bag = lsCache || bag;
+
+        return {
+            getData: function (resource) {
+                if (resource in bag) {
+                    return bag[resource];
+                }
+                return false;
+            },
+            addData: function (resource, data) {
+                bag[resource] = data;
+                localStorage && localStorage.setItem(cacheKey, JSON.stringify(bag));
+            }
+        };
+    }();
+
+    var SHEET_DATA_SOURCE = {
+        organization: API_HOST + SHEET_ID + "/values/RawData!E3:E?" + $.param({
+            majorDimension: 'COLUMNS',
+            key: API_KEY
+        }),
+        region: API_HOST + SHEET_ID + "/values/RawData!F3:F?" + $.param({
+            majorDimension: 'COLUMNS',
+            key: API_KEY
+        }),
+        state: API_HOST + SHEET_ID + "/values/RawData!AX3:AX?" + $.param({
+            majorDimension: 'COLUMNS',
+            key: API_KEY
+        }),
+    };
+
     var SheetApi = function (sheetId, apiKey) {
         var baseUrl = 'https://sheets.googleapis.com/v4/spreadsheets/' + sheetId;
 
@@ -88,7 +193,6 @@
         function getSheet(sheet) {
             return $.get(baseUrl + "/values/" + sheet, getQueryParameters());
         }
-        ;
 
         return {
             listSheets: function () {
@@ -98,16 +202,58 @@
                 return getSheet('Sheet1' + (range ? ('!' + range) : ''));
             }
         };
-    }(
-        "1wGy8ABua1GReuwW2vwAmMMbLOvwKh-b9TQ54IBA9fmE",
-        "AIzaSyDIs2fHGHxFLWE-O5hLdBtxhZdfx1Jjld4"
-        );
+    }(SHEET_ID, API_KEY);
 
     $(function () {
+        var filterByTerm = function (data, term) {
+            return data.filter(function (item) {
+                return item.toUpperCase().indexOf(term.toUpperCase()) >= 0;
+            });
+        };
+
+        $.map(['organization', 'region', 'state'], function (fieldName) {
+            $("#" + fieldName).autocomplete({
+                minLength: 1,
+                source: function (request, response) {
+                    var cache = CACHE.getData(fieldName);
+                    var term = request.term;
+                    if (term in cache) {
+                        response(cache[ term ]);
+                        CACHE.addData(fieldName, cache);
+                        return;
+                    }
+
+                    var url = SHEET_DATA_SOURCE[fieldName];
+
+                    var data = CACHE.getData(url);
+                    if (data) {
+                        cache[term] = filterByTerm(data, term);
+                        cache[term] = cache[term].length ? cache[term] : ['No matches'];
+                        CACHE.addData(fieldName, cache);
+                        response(cache[term]);
+                        return;
+                    }
+                    $.getJSON(url, {}, function (data, status, xhr) {
+                        data = data.values[0].filter(function (item, pos, self) {
+                            return self.indexOf(item) == pos;
+                        }).sort();
+
+                        CACHE.addData(url, data);
+
+                        cache[term] = filterByTerm(data, term);
+                        cache[term] = cache[term].length ? cache[term] : ['No matches'];
+                        CACHE.addData(fieldName, cache);
+                        response(cache[term]);
+                    });
+                }
+            });
+        });
+
         $('input[type="checkbox"]').checkboxradio({
-            icon:true
+            icon: true
         });
     });
+
     function search() {
         var searchButton = $('#button-search');
         searchButton.attr('disabled', true);
@@ -116,29 +262,54 @@
         var container = $('#search-body table tbody');
         container.html("").hide();
 
-        SheetApi.getSheet1("A1:AA").done(function (data) {
-            var header = data.values.shift();
-            var body = data.values.reduce(function (body, item) {
-                if (header.indexOf('profile_picture') >= 0) {
-                    var ix = header.indexOf('profile_picture');
-                    item[ix] = '<img src="' + item[ix] + '" class="img-thumbnail">';
-                }
-                return body
-                    + "<tr><td>" + item.join('</td><td>') + "</td></tr>";
-            }, "");
+        var criterias = [];
+        $.map($('#search-form input'), function (el) {
+            switch (el.type) {
+                case 'text':
+                    el.value && (criterias.push(el.name + ' = "' + el.value + '"'));
+                    break;
+                case 'checkbox':
+                    el.checked && (criterias.push(el.name + ' = "' + el.value + '"'));
+                    break;
+            }
+        });
+        var query = "select * " + (criterias.length ? "where " + criterias.join(' and ') : '');
 
-            container.html(
-                "<tr><th>" + header.join('</th><th>') + "</th></tr>"
-                + body
-                );
-            var searchBody = $('#search-body table');
-            $.map($('#field-list input:checked'), function (el){
-                var th = searchBody.find('th:contains(' + el.name + ')')[0];
-
-                searchBody.find('tr :nth-child(' + (th.cellIndex + 1) + ')').hide()
-            });
-
-            container.show();
+        $.ajax('https://spreadsheets.google.com/tq', {
+            data :{
+                tqx: 'out:html',
+                key: SHEET_ID,
+                gid: RAW_DATA_GIR,
+                tq: query
+            },
+            crossDomain: true,
+            dataType: 'html',
+            type:'GET'
+        }).done(function (html){
+            $('#search-body table tbody').html($(html).find('table tbody').html());
+//        SheetApi.getSheet1("A1:AA").done(function (data) {
+//            var header = data.values.shift();
+//            var body = data.values.reduce(function (body, item) {
+//                if (header.indexOf('profile_picture') >= 0) {
+//                    var ix = header.indexOf('profile_picture');
+//                    item[ix] = '<img src="' + item[ix] + '" class="img-thumbnail">';
+//                }
+//                return body
+//                    + "<tr><td>" + item.join('</td><td>') + "</td></tr>";
+//            }, "");
+//
+//            container.html(
+//                "<tr><th>" + header.join('</th><th>') + "</th></tr>"
+//                + body
+//                );
+//            var searchBody = $('#search-body table');
+//            $.map($('#field-list input:checked'), function (el) {
+//                var th = searchBody.find('th:contains(' + el.name + ')')[0];
+//
+//                searchBody.find('tr :nth-child(' + (th.cellIndex + 1) + ')').hide()
+//            });
+//
+//            container.show();
         }).fail(function () {
 
         }).always(function () {
@@ -146,6 +317,19 @@
             $("#progressbar").hide();
         });
 
+    }
+
+    function reset() {
+        $.map($('#search-form input'), function (el) {
+            switch (el.type) {
+                case 'text':
+                    el.value = '';
+                    break;
+                case 'checkbox':
+                    el.checked && $(el).click();
+                    break;
+            }
+        });
     }
 
     function loading() {
@@ -186,6 +370,3 @@
 </script>
 
 <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>-->
-]]>
-  </Content> 
-</Module>
