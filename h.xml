@@ -119,6 +119,7 @@
         <input type="checkbox" name="profile_picture" id="checkbox-5"/>
     </fieldset>-->
     <div class="row">
+        <div class="col-xs-12"><br/></div>
         <div class="col-xs-6">
             <button id="button-reset" type="button" class="btn btn-primary" onclick="reset();">Reset</button>
         </div>
