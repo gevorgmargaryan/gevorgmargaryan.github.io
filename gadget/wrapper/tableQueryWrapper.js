@@ -56,6 +56,9 @@ var TableQueryWrapper = function(query, container, options, select, where) {
     $('html, body').animate({
         scrollTop: $("#table").offset().top
     }, 500);
+    $( "#table tbody tr" ).on( "click", function() {
+        openDetails(this);
+    });
   });
 
   options = options || {};
@@ -94,7 +97,6 @@ TableQueryWrapper.prototype.sendAndDraw = function(success) {
 
 /** Handles the query response after a send returned by the data source. */
 TableQueryWrapper.prototype.handleResponse = function(response, success) {
-  success && success();
   this.currentDataTable = null;
   if (response.isError()) {
     google.visualization.errors.addError(this.container, response.getMessage(),
@@ -103,6 +105,7 @@ TableQueryWrapper.prototype.handleResponse = function(response, success) {
     this.currentDataTable = response.getDataTable();
     this.table.draw(this.currentDataTable, this.tableOptions);
   }
+  success && success();
 };
 
 
