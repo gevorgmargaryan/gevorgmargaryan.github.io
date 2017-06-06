@@ -33,12 +33,14 @@
  *         sortColumn {number} set according to the given sort.
  * @constructor
  */
-var TableQueryWrapper = function(query, container, options) {
+var TableQueryWrapper = function(query, container, options, select, where) {
 
   this.table = new google.visualization.Table(container);
   this.query = query;
   this.sortQueryClause = '';
   this.pageQueryClause = '';
+  this.selectQueryClause = select || '';
+  this.whereQueryClause = where || '';
   this.container = container;
   this.currentDataTable = null;
 
@@ -46,6 +48,12 @@ var TableQueryWrapper = function(query, container, options) {
   var addListener = google.visualization.events.addListener;
   addListener(this.table, 'page', function(e) {self.handlePage(e)});
   addListener(this.table, 'sort', function(e) {self.handleSort(e)});
+  addListener(this.table, 'ready', function(){
+    $("table.google-visualization-table-table").addClass(
+        'table table-bordered'
+    );
+    $("table.google-visualization-table-table").parent('div').addClass('table-responsive')
+  });
 
   options = options || {};
   options = TableQueryWrapper.clone(options);
@@ -53,7 +61,7 @@ var TableQueryWrapper = function(query, container, options) {
   options['sort'] = 'event';
   options['page'] = 'event';
   options['showRowNumber'] = true;
-  var buttonConfig = 'pagingButtonsConfiguration';
+  var buttonConfig = 'pagingButtons';
   options[buttonConfig] = options[buttonConfig] || 'both';
   options['pageSize'] = (options['pageSize'] > 0) ? options['pageSize'] : 10;
   this.pageSize = options['pageSize'];
@@ -68,18 +76,22 @@ var TableQueryWrapper = function(query, container, options) {
  * container. If the query refresh interval is set then the visualization will
  * be redrawn upon each refresh.
  */
-TableQueryWrapper.prototype.sendAndDraw = function() {
+TableQueryWrapper.prototype.sendAndDraw = function(success) {
   this.query.abort();
-  var queryClause = this.sortQueryClause + ' ' + this.pageQueryClause;
+  var queryClause = this.selectQueryClause
+      + ' ' + this.whereQueryClause
+      + ' ' + this.sortQueryClause
+      + ' ' + this.pageQueryClause;
   this.query.setQuery(queryClause);
   this.table.setSelection([]);
   var self = this;
-  this.query.send(function(response) {self.handleResponse(response)});
+  this.query.send(function(response) {self.handleResponse(response, success)});
 };
 
 
 /** Handles the query response after a send returned by the data source. */
-TableQueryWrapper.prototype.handleResponse = function(response) {
+TableQueryWrapper.prototype.handleResponse = function(response, success) {
+  success && success();
   this.currentDataTable = null;
   if (response.isError()) {
     google.visualization.errors.addError(this.container, response.getMessage(),
