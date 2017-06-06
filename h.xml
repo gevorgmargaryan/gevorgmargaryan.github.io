@@ -3,380 +3,343 @@
   <ModulePrefs title="hello world example" /> 
   <Content type="html">
      <![CDATA[ 
-<!--<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">-->
-<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-<style>
-    .ui-progressbar {
-        position: relative;
-    }
-    .progress-label {
-        position: absolute;
-        left: 50%;
-        top: 4px;
-        font-weight: bold;
-        text-shadow: 1px 1px 0 #fff;
-    }
-    #search-message {
-        margin-top: 50px;
-    }
-    #button-search,
-    #button-reset {
-        width: 100%;
-    }
-    fieldset {
-        font-size: 80%;
-    }
-    img {
-        width: 40px;
-        height: 40px
-    }
+<!DOCCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
-    .ui-autocomplete-loading {
-        background: white url("https://jqueryui.com/resources/demos/autocomplete/images/ui-anim_basic_16x16.gif") right center no-repeat;
-    }
-    .ui-autocomplete {
-        max-height: 150px;
-        overflow-y: auto;
-        /* prevent horizontal scrollbar */
-        overflow-x: hidden;
-    }
-    /* IE 6 doesn't support max-height
-     * we use height instead, but this forces the menu to always be this tall
-     */
-    * html .ui-autocomplete {
-        height: 150px;
-    }
-</style>
-<div class="container-fluid widget" id="search-form">
-    <h1 id="demo">KOL Finder</h1>
-    <div class="row" >
-        <div class="col-xs-12 col-md-6 form-group">
-            <label class="control-label" for="organization">Organization</label>
-            <input type="text" class="form-control" id="organization" aria-describedby="helpBlock2" placeholder="Start typing"
-                   name="E"/>
-            <span id="helpBlock2" class="help-block"></span>
-        </div>
-        <div class="col-xs-6 col-md-3 form-group">
-            <label class="control-label" for="region">Region</label>
-            <input type="text" class="form-control" id="region" aria-describedby="helpBlock2" placeholder="Start typing"
-                   name="F"/>
-            <span id="helpBlock2" class="help-block"></span>
-        </div>
-        <div class="col-xs-6 col-md-3 form-group">
-            <label class="control-label" for="region">State</label>
-            <input type="text" class="form-control" id="state" aria-describedby="helpBlock2" placeholder="Start typing"
-                   name="AX"/>
-            <span id="helpBlock2" class="help-block"></span>
-        </div>
-        <div class="col-xs-12">
-            <fieldset>
-                <p class="text-success">KOL Areas of Strategic Interest</p>
-                <label for="RawData!P">Payer Coverage and Utilization Management</label>
-                <input type="checkbox" name="P" id="RawData!P" value="Yes"/>
-                <label for="RawData!Q">Insurance Benefit Design</label>
-                <input type="checkbox" name="Q" id="RawData!Q" value="Yes"/>
-                <label for="RawData!R">"Big Data" and Technology Intermediaries</label>
-                <input type="checkbox" name="R" id="RawData!R" value="Yes"/>
-                <label for="RawData!S">Evolving Role of the Patient</label>
-                <input type="checkbox" name="S" id="RawData!S" value="Yes"/>
-                <label for="RawData!T">Provider Consolidation and Site of Care Shift</label>
-                <input type="checkbox" name="T" id="RawData!T" value="Yes"/>
-                <label for="RawData!U">Provider Reimbursement</label>
-                <input type="checkbox" name="U" id="RawData!U" value="Yes"/>
-                <label for="RawData!V">Evolving Views on Quality</label>
-                <input type="checkbox" name="V" id="RawData!V" value="Yes"/>
-                <label for="RawData!W">Personalized Healthcare</label>
-                <input type="checkbox" name="W" id="RawData!W" value="Yes"/>
-                <label for="RawData!X">Drug Pricing and Contracting</label>
-                <input type="checkbox" name="X" id="RawData!X" value="Yes"/>
-                <label for="RawData!Y">Biosimilars</label>
-                <input type="checkbox" name="Y" id="RawData!Y" value="Yes"/>
-                <label for="RawData!Z">Pathways and Guidelines</label>
-                <input type="checkbox" name="Z" id="RawData!Z" value="Yes"/>
-                <label for="RawData!AA">ACOs and Other Risk-Based Arrangements</label>
-                <input type="checkbox" name="AA" id="RawData!AA" value="Yes"/>
-                <label for="RawData!AB">340B Program Growth</label>
-                <input type="checkbox" name="AB" id="RawData!AB" value="Yes"/>
-                <label for="RawData!AC">Other</label>
-                <input type="checkbox" name="AC" id="RawData!AC" value="Yes"/>
-            </fieldset>
-        </div>
-    </div>
-<!--    <fieldset id="field-list">
-        <p class="text-success">Filter field list:</p>
-        <label for="checkbox-1">Id</label>
-        <input type="checkbox" name="id" id="checkbox-1"/>
-        <label for="checkbox-2">Name</label>
-        <input type="checkbox" name="name" id="checkbox-2"/>
-        <label for="checkbox-3">Phone</label>
-        <input type="checkbox" name="phone" id="checkbox-3"/>
-        <label for="checkbox-4">City</label>
-        <input type="checkbox" name="city" id="checkbox-4"/>
-        <label for="checkbox-5">Profile picture</label>
-        <input type="checkbox" name="profile_picture" id="checkbox-5"/>
-    </fieldset>-->
-    <div class="row">
-        <div class="col-xs-12"><br/></div>
-        <div class="col-xs-6">
-            <button id="button-reset" type="button" class="btn btn-primary" onclick="reset();">Reset</button>
-        </div>
-        <div class="col-xs-6">
-            <button id="button-search" type="button" class="btn btn-primary" onclick="search();">Search</button>
-        </div>
-    </div>
-</div>
-<div class="container-fluid" id="search-message">
-    <div id="progressbar" hidden><div class="progress-label">Loading...</div></div>
-</div>
-<div class="container-fluid table-responsive" id="search-body">
-    <table  class="table table-bordered  table-hover table-striped table-condensed">
-        <tbody></tbody>
-    </table>
-</div>
-
-<script>
-    var API_HOST = "https://sheets.googleapis.com/v4/spreadsheets/";
-    //@TODO change key
-    var API_KEY = "AIzaSyDIs2fHGHxFLWE-O5hLdBtxhZdfx1Jjld4";
-    var SHEET_ID = "1JDo6BzfC0StJKLkYLl_g1AxHrgBWQZbjNddBI9o1N78";
-    var RAW_DATA_GIR = "1896516446";
-
-    var CACHE = function () {
-        var today = new Date();
-        var cacheKey = 'cache_' + today.getMonth() + '_' + today.getDate() + window.location.origin;
-
-        var lsCache =  localStorage && localStorage.getItem(cacheKey);
-        lsCache = lsCache && JSON.parse(lsCache);
-
-        var bag = {
-            organization: {},
-            region: {},
-            state: {},
-        };
-        bag = lsCache || bag;
-
-        return {
-            getData: function (resource) {
-                if (resource in bag) {
-                    return bag[resource];
-                }
-                return false;
-            },
-            addData: function (resource, data) {
-                bag[resource] = data;
-                localStorage && localStorage.setItem(cacheKey, JSON.stringify(bag));
+        <style>
+            .ui-progressbar {
+                position: relative;
             }
-        };
-    }();
-
-    var SHEET_DATA_SOURCE = {
-        organization: API_HOST + SHEET_ID + "/values/RawData!E3:E?" + $.param({
-            majorDimension: 'COLUMNS',
-            key: API_KEY
-        }),
-        region: API_HOST + SHEET_ID + "/values/RawData!F3:F?" + $.param({
-            majorDimension: 'COLUMNS',
-            key: API_KEY
-        }),
-        state: API_HOST + SHEET_ID + "/values/RawData!AX3:AX?" + $.param({
-            majorDimension: 'COLUMNS',
-            key: API_KEY
-        }),
-    };
-
-    var SheetApi = function (sheetId, apiKey) {
-        var baseUrl = 'https://sheets.googleapis.com/v4/spreadsheets/' + sheetId;
-
-        var getQueryParameters = function () {
-            return {
-                key: apiKey
-            };
-        };
-
-        function getSheet(sheet) {
-            return $.get(baseUrl + "/values/" + sheet, getQueryParameters());
-        }
-
-        return {
-            listSheets: function () {
-                return $.get(baseUrl, getQueryParameters());
-            },
-            getSheet1: function (range) {
-                return getSheet('Sheet1' + (range ? ('!' + range) : ''));
+            .progress-label {
+                position: absolute;
+                left: 50%;
+                top: 4px;
+                font-weight: bold;
+                text-shadow: 1px 1px 0 #fff;
             }
-        };
-    }(SHEET_ID, API_KEY);
-
-    $(function () {
-        var filterByTerm = function (data, term) {
-            return data.filter(function (item) {
-                return item.toUpperCase().indexOf(term.toUpperCase()) >= 0;
-            });
-        };
-
-        $.map(['organization', 'region', 'state'], function (fieldName) {
-            $("#" + fieldName).autocomplete({
-                minLength: 1,
-                source: function (request, response) {
-                    var cache = CACHE.getData(fieldName);
-                    var term = request.term;
-                    if (term in cache) {
-                        response(cache[ term ]);
-                        CACHE.addData(fieldName, cache);
-                        return;
-                    }
-
-                    var url = SHEET_DATA_SOURCE[fieldName];
-
-                    var data = CACHE.getData(url);
-                    if (data) {
-                        cache[term] = filterByTerm(data, term);
-                        cache[term] = cache[term].length ? cache[term] : ['No matches'];
-                        CACHE.addData(fieldName, cache);
-                        response(cache[term]);
-                        return;
-                    }
-                    $.getJSON(url, {}, function (data, status, xhr) {
-                        data = data.values[0].filter(function (item, pos, self) {
-                            return self.indexOf(item) == pos;
-                        }).sort();
-
-                        CACHE.addData(url, data);
-
-                        cache[term] = filterByTerm(data, term);
-                        cache[term] = cache[term].length ? cache[term] : ['No matches'];
-                        CACHE.addData(fieldName, cache);
-                        response(cache[term]);
-                    });
-                }
-            });
-        });
-
-        $('input[type="checkbox"]').checkboxradio({
-            icon: true
-        });
-    });
-
-    function search() {
-        var searchButton = $('#button-search');
-        searchButton.attr('disabled', true);
-        loading();
-
-        var container = $('#search-body table tbody');
-        container.html("").hide();
-
-        var criterias = [];
-        $.map($('#search-form input'), function (el) {
-            switch (el.type) {
-                case 'text':
-                    el.value && (criterias.push(el.name + ' = "' + el.value + '"'));
-                    break;
-                case 'checkbox':
-                    el.checked && (criterias.push(el.name + ' = "' + el.value + '"'));
-                    break;
+            #search-message {
+                margin-top: 50px;
             }
-        });
-        var query = "select * " + (criterias.length ? "where " + criterias.join(' and ') : '');
+            #button-search,
+            #button-reset {
+                width: 100%;
+            }
+            fieldset {
+                font-size: 80%;
+            }
+            img {
+                width: 40px;
+                height: 40px
+            }
 
-        $.ajax('https://spreadsheets.google.com/tq', {
-            data :{
-                tqx: 'out:html',
-                key: SHEET_ID,
+            .table-header {
+                width: 100px;
+            }
+
+            .ui-autocomplete-loading {
+                background: white url("https://jqueryui.com/resources/demos/autocomplete/images/ui-anim_basic_16x16.gif") right center no-repeat;
+            }
+            .ui-autocomplete {
+                max-height: 150px;
+                overflow-y: auto;
+                /* prevent horizontal scrollbar */
+                overflow-x: hidden;
+            }
+            /* IE 6 doesn't support max-height
+             * we use height instead, but this forces the menu to always be this tall
+             */
+            * html .ui-autocomplete {
+                height: 150px;
+            }
+        </style>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+        <script src="https://www.gstatic.com/charts/loader.js"></script>
+        <script src="tableQuerywrapper.js"></script>
+        <script>
+            var API_HOST = "https://sheets.googleapis.com/v4/spreadsheets/";
+            //@TODO change key
+            var API_KEY = "AIzaSyDIs2fHGHxFLWE-O5hLdBtxhZdfx1Jjld4";
+            var SHEET_ID = "1JDo6BzfC0StJKLkYLl_g1AxHrgBWQZbjNddBI9o1N78";
+            var RAW_DATA_GIR = "1896516446";
+
+            var dataSourceUrl = 'https://docs.google.com/spreadsheets/d/' + SHEET_ID + '/gviz/tq?' + $.param({
                 gid: RAW_DATA_GIR,
-                tq: query
-            },
-            crossDomain: true,
-            dataType: 'html',
-            type:'GET'
-        }).done(function (html){
-            $('#search-body table tbody').html($(html).find('table tbody').html());
-//        SheetApi.getSheet1("A1:AA").done(function (data) {
-//            var header = data.values.shift();
-//            var body = data.values.reduce(function (body, item) {
-//                if (header.indexOf('profile_picture') >= 0) {
-//                    var ix = header.indexOf('profile_picture');
-//                    item[ix] = '<img src="' + item[ix] + '" class="img-thumbnail">';
-//                }
-//                return body
-//                    + "<tr><td>" + item.join('</td><td>') + "</td></tr>";
-//            }, "");
-//
-//            container.html(
-//                "<tr><th>" + header.join('</th><th>') + "</th></tr>"
-//                + body
-//                );
-//            var searchBody = $('#search-body table');
-//            $.map($('#field-list input:checked'), function (el) {
-//                var th = searchBody.find('th:contains(' + el.name + ')')[0];
-//
-//                searchBody.find('tr :nth-child(' + (th.cellIndex + 1) + ')').hide()
-//            });
-//
-//            container.show();
-        }).fail(function () {
+                pub: 1,
+            });
+            var query, container, options;
+            google.charts.load('current', {'packages': ['table']});
+            google.charts.setOnLoadCallback(init);
 
-        }).always(function () {
-            searchButton.attr('disabled', false);
-            $("#progressbar").hide();
-        });
+            var CACHE = function () {
+                var today = new Date();
+                var cacheKey = 'cache_' + today.getMonth() + '_' + today.getDate() + window.location.origin;
 
-    }
+                var lsCache = localStorage && localStorage.getItem(cacheKey);
+                lsCache = lsCache && JSON.parse(lsCache);
 
-    function reset() {
-        $.map($('#search-form input'), function (el) {
-            switch (el.type) {
-                case 'text':
-                    el.value = '';
-                    break;
-                case 'checkbox':
-                    el.checked && $(el).click();
-                    break;
-            }
-        });
-    }
+                var bag = {
+                    organization: {},
+                    region: {},
+                    state: {},
+                };
+                bag = lsCache || bag;
 
-    function loading() {
+                return {
+                    getData: function (resource) {
+                        if (resource in bag) {
+                            return bag[resource];
+                        }
+                        return false;
+                    },
+                    addData: function (resource, data) {
+                        bag[resource] = data;
+                        localStorage && localStorage.setItem(cacheKey, JSON.stringify(bag));
+                    }
+                };
+            }();
 
-        $(function () {
-            var progressbar = $("#progressbar"),
-                progressLabel = $(".progress-label");
+            var SHEET_DATA_SOURCE = {
+                organization: API_HOST + SHEET_ID + "/values/RawData!E3:E?" + $.param({
+                    majorDimension: 'COLUMNS',
+                    key: API_KEY
+                }),
+                region: API_HOST + SHEET_ID + "/values/RawData!F3:F?" + $.param({
+                    majorDimension: 'COLUMNS',
+                    key: API_KEY
+                }),
+                state: API_HOST + SHEET_ID + "/values/RawData!AX3:AX?" + $.param({
+                    majorDimension: 'COLUMNS',
+                    key: API_KEY
+                }),
+            };
 
-            progressbar.show();
+            var SheetApi = function (sheetId, apiKey) {
+                var baseUrl = 'https://sheets.googleapis.com/v4/spreadsheets/' + sheetId;
 
-            progressbar.progressbar({
-                value: false,
-                change: function () {
-                    progressLabel.text(progressbar.progressbar("value") + "%");
-                },
-                complete: function () {
-                    progressLabel.text("Complete!");
+                var getQueryParameters = function () {
+                    return {
+                        key: apiKey
+                    };
+                };
+
+                function getSheet(sheet) {
+                    return $.get(baseUrl + "/values/" + sheet, getQueryParameters());
                 }
+
+                return {
+                    listSheets: function () {
+                        return $.get(baseUrl, getQueryParameters());
+                    },
+                    getSheet1: function (range) {
+                        return getSheet('Sheet1' + (range ? ('!' + range) : ''));
+                    }
+                };
+            }(SHEET_ID, API_KEY);
+
+            $(function () {
+                var filterByTerm = function (data, term) {
+                    return data.filter(function (item) {
+                        return item.toUpperCase().indexOf(term.toUpperCase()) >= 0;
+                    });
+                };
+
+                $.map(['organization', 'region', 'state'], function (fieldName) {
+                    $("#" + fieldName).autocomplete({
+                        minLength: 1,
+                        source: function (request, response) {
+                            var cache = CACHE.getData(fieldName);
+                            var term = request.term;
+                            if (term in cache) {
+                                response(cache[ term ]);
+                                CACHE.addData(fieldName, cache);
+                                return;
+                            }
+
+                            var url = SHEET_DATA_SOURCE[fieldName];
+
+                            var data = CACHE.getData(url);
+                            if (data) {
+                                cache[term] = filterByTerm(data, term);
+                                cache[term] = cache[term].length ? cache[term] : ['No matches'];
+                                CACHE.addData(fieldName, cache);
+                                response(cache[term]);
+                                return;
+                            }
+                            $.getJSON(url, {}, function (data, status, xhr) {
+                                data = data.values[0].filter(function (item, pos, self) {
+                                    return self.indexOf(item) == pos;
+                                }).sort();
+
+                                CACHE.addData(url, data);
+
+                                cache[term] = filterByTerm(data, term);
+                                cache[term] = cache[term].length ? cache[term] : ['No matches'];
+                                CACHE.addData(fieldName, cache);
+                                response(cache[term]);
+                            });
+                        }
+                    });
+                });
+
+                $('input[type="checkbox"]').checkboxradio({
+                    icon: true
+                });
             });
 
-            function progress() {
-                var val = progressbar.progressbar("value") || 0;
+            function search() {
+                var searchButton = $('#button-search');
+                searchButton.attr('disabled', true);
+                $('#table tbody').hide();
 
-                progressbar.progressbar("value", val + 2);
+                var container = $('#search-body table tbody');
+                container.html("").hide();
 
-                if (val < 40) {
-                    setTimeout(progress, 40);
-                } else if (val < 60) {
-                    setTimeout(progress, 300);
-                } else {
-                    setTimeout(progress, 600);
-                }
+                sendAndDraw(function () {
+                    searchButton.attr('disabled', false);
+                    $('#table tbody').show();
+                });
             }
 
-            setTimeout(progress, 3000);
-        });
-    }
-</script>
+            function reset() {
+                $.map($('#search-form input'), function (el) {
+                    switch (el.type) {
+                        case 'text':
+                            el.value = '';
+                            break;
+                        case 'checkbox':
+                            el.checked && $(el).click();
+                            break;
+                    }
+                });
+            }
 
-<!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>-->
+            function init() {
+                query = new google.visualization.Query(dataSourceUrl);
+                container = document.getElementById("table");
+                options = {
+                    cssClassNames: {
+                        headerCell: 'google-visualization-table-th',
+                    },
+                    pageSize: 10,
+                };
+            }
 
-]]>
+            function sendAndDraw(success) {
+                query.abort();
+
+                var criterias = [];
+                $.map($('#search-form input'), function (el) {
+                    switch (el.type) {
+                        case 'text':
+                            el.value && (criterias.push('`' + el.name + '`' + ' contains "' + el.value + '"'));
+                            break;
+                        case 'checkbox':
+                            el.checked && (criterias.push('`' + el.name + '`' + ' = "' + el.value + '"'));
+                            break;
+                    }
+                });
+                var where = criterias.length ? "where " + criterias.join(' and ') : '';
+
+                var tableQueryWrapper = new TableQueryWrapper(query, container, options, 'select `B`, `E`, `F`', where);
+                tableQueryWrapper.sendAndDraw(success);
+            }
+
+
+            function setOption(prop, value) {
+                options[prop] = value;
+                sendAndDraw();
+            }
+
+        </script>
+    </head>
+    <body>
+        <div class="container-fluid widget" id="search-form">
+            <h1 id="demo">KOL Finder</h1>
+            <div class="row" >
+                <div class="col-xs-12 col-md-6 form-group">
+                    <label class="control-label" for="organization">Organization</label>
+                    <input type="text" class="form-control" id="organization" aria-describedby="helpBlock2" placeholder="Start typing"
+                           name="E"/>
+                    <span id="helpBlock2" class="help-block"></span>
+                </div>
+                <div class="col-xs-6 col-md-3 form-group">
+                    <label class="control-label" for="region">Region</label>
+                    <input type="text" class="form-control" id="region" aria-describedby="helpBlock2" placeholder="Start typing"
+                           name="F"/>
+                    <span id="helpBlock2" class="help-block"></span>
+                </div>
+                <div class="col-xs-6 col-md-3 form-group">
+                    <label class="control-label" for="region">State</label>
+                    <input type="text" class="form-control" id="state" aria-describedby="helpBlock2" placeholder="Start typing"
+                           name="AX"/>
+                    <span id="helpBlock2" class="help-block"></span>
+                </div>
+                <div class="col-xs-12">
+                    <fieldset>
+                        <h2 class="text-success">KOL Areas of Strategic Interest</h2>
+                        <label for="RawData!P">Payer Coverage and Utilization Management</label>
+                        <input type="checkbox" name="P" id="RawData!P" value="Yes"/>
+                        <label for="RawData!Q">Insurance Benefit Design</label>
+                        <input type="checkbox" name="Q" id="RawData!Q" value="Yes"/>
+                        <label for="RawData!R">"Big Data" and Technology Intermediaries</label>
+                        <input type="checkbox" name="R" id="RawData!R" value="Yes"/>
+                        <label for="RawData!S">Evolving Role of the Patient</label>
+                        <input type="checkbox" name="S" id="RawData!S" value="Yes"/>
+                        <label for="RawData!T">Provider Consolidation and Site of Care Shift</label>
+                        <input type="checkbox" name="T" id="RawData!T" value="Yes"/>
+                        <label for="RawData!U">Provider Reimbursement</label>
+                        <input type="checkbox" name="U" id="RawData!U" value="Yes"/>
+                        <label for="RawData!V">Evolving Views on Quality</label>
+                        <input type="checkbox" name="V" id="RawData!V" value="Yes"/>
+                        <label for="RawData!W">Personalized Healthcare</label>
+                        <input type="checkbox" name="W" id="RawData!W" value="Yes"/>
+                        <label for="RawData!X">Drug Pricing and Contracting</label>
+                        <input type="checkbox" name="X" id="RawData!X" value="Yes"/>
+                        <label for="RawData!Y">Biosimilars</label>
+                        <input type="checkbox" name="Y" id="RawData!Y" value="Yes"/>
+                        <label for="RawData!Z">Pathways and Guidelines</label>
+                        <input type="checkbox" name="Z" id="RawData!Z" value="Yes"/>
+                        <label for="RawData!AA">ACOs and Other Risk-Based Arrangements</label>
+                        <input type="checkbox" name="AA" id="RawData!AA" value="Yes"/>
+                        <label for="RawData!AB">340B Program Growth</label>
+                        <input type="checkbox" name="AB" id="RawData!AB" value="Yes"/>
+                        <label for="RawData!AC">Other</label>
+                        <input type="checkbox" name="AC" id="RawData!AC" value="Yes"/>
+                    </fieldset>
+                </div>
+            </div>
+            <!--    <fieldset id="field-list">
+                    <p class="text-success">Filter field list:</p>
+                    <label for="checkbox-1">Id</label>
+                    <input type="checkbox" name="id" id="checkbox-1"/>
+                    <label for="checkbox-2">Name</label>
+                    <input type="checkbox" name="name" id="checkbox-2"/>
+                    <label for="checkbox-3">Phone</label>
+                    <input type="checkbox" name="phone" id="checkbox-3"/>
+                    <label for="checkbox-4">City</label>
+                    <input type="checkbox" name="city" id="checkbox-4"/>
+                    <label for="checkbox-5">Profile picture</label>
+                    <input type="checkbox" name="profile_picture" id="checkbox-5"/>
+                </fieldset>-->
+            <div class="row">
+                <div class="col-xs-12"><br/></div>
+                <div class="col-xs-6">
+                    <button id="button-reset" type="button" class="btn btn-primary" onclick="reset();">Reset</button>
+                </div>
+                <div class="col-xs-6">
+                    <button id="button-search" type="button" class="btn btn-primary" onclick="search();">Search</button>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid" id="search-message">
+            <div id="progressbar" hidden><div class="progress-label">Loading...</div></div>
+        </div>
+        <div  class="container-fluid" id="table"></div>
+    </body>
+</html>]]>
   </Content> 
 </Module>
