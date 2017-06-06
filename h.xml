@@ -31,8 +31,8 @@
                 font-size: 80%;
             }
             img {
-                width: 40px;
-                height: 40px
+                width: 100px;
+                height: 100px
             }
 
             .table-header {
@@ -54,10 +54,23 @@
             * html .ui-autocomplete {
                 height: 150px;
             }
+
+            #dialog-detail table td {
+                border: 1px solid black;
+                padding: 1px;
+                text-align: left;
+            }
+            #dialog-detail table {
+                border-collapse: collapse;
+            }
+            .ui-dialog-titlebar-close {
+                visibility: hidden;
+            }
         </style>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
         <script src="https://www.gstatic.com/charts/loader.js"></script>
+        <!--<script src="tableQuerywrapper.js"></script>-->
         <script src="https://gevorgmargaryan.github.io/gadget/wrapper/tableQueryWrapper.js"></script>
         <script>
             var API_HOST = "https://sheets.googleapis.com/v4/spreadsheets/";
@@ -188,6 +201,10 @@
                 $('input[type="checkbox"]').checkboxradio({
                     icon: true
                 });
+
+                $( "#dialog-detail" ).dialog({
+                    autoOpen:false
+                });
             });
 
             function search() {
@@ -254,6 +271,57 @@
                 sendAndDraw();
             }
 
+            function openDetails (tr) {
+                var name = $(tr).find('td:nth-child(2)').text();
+                var org = $(tr).find('td:nth-child(3)').text()
+                var region = $(tr).find('td:nth-child(4)').text()
+
+                var detailQuery = new google.visualization.Query(dataSourceUrl + '&' + $.param({
+                    tq:'select * where B="' + name + '" and E="' + org + '" and F="' + region + '"'
+                }))
+                detailQuery.send(function (res) {
+                    var dataTable = res.getDataTable();
+                    var form = $( "#dialog-detail" );
+                    form.find('#detail-name').text(dataTable.getValue(0, 1));
+                    form.find('#detail-image img').attr('src', dataTable.getValue(0, 53))
+                    form.find('#detail-current-role').text(dataTable.getValue(0, 54));
+                    form.find('#detail-prior-roles').text(dataTable.getValue(0, 55));
+                    form.find('#detail-mentiones').text(dataTable.getValue(0, 56));
+                    form.find('#detail-area-of-expertise').text(dataTable.getValue(0, 57));
+                });
+                $( "#dialog-detail" ).dialog('destroy');
+                $( "#dialog-detail" ).attr('title', name);
+                $( "#dialog-detail" ).dialog({
+                    buttons: [
+                        {
+                          text: "Close",
+                          click: function() {
+                                $( this ).dialog( "destroy" );
+                                $(this).dialog({
+                                    autoOpen:false
+                                });
+                          },
+
+                          // Uncommenting the following line would hide the text,
+                          // resulting in the label being used as a tooltip
+                          showText: false
+                        }
+                      ],
+                    autoOpen: false,
+                    position :  { my: "right top", at: "right bottom", of: window },
+                    width : 500,
+                    height: 600,
+                    show: {
+                        effect: "blind",
+                        duration: 500
+                    },
+                    hide: {
+                        effect: "explode",
+                        duration: 500
+                    }
+                });
+                $( "#dialog-detail" ).dialog( "open" );
+            }
         </script>
     </head>
     <body>
@@ -338,8 +406,38 @@
         <div class="container-fluid" id="search-message">
             <div id="progressbar" hidden><div class="progress-label">Loading...</div></div>
         </div>
+        <div id="dialog-detail" title="#full name#">
+            <table>
+                <tbody>
+                    <tr>
+                        <td rowspan="5" id="detail-image"><img src=""/></td>
+                        <td>Name</td>
+                        <td id="detail-name"></td>
+                    </tr>
+                    <tr>
+                        <td>Current Role</td>
+                        <td id="detail-current-role"></td>
+                    </tr>
+                    <tr>
+                        <td>Prior Roles</td>
+                        <td id="detail-prior-roles"></td>
+                    </tr>
+                    <tr>
+                        <td># Mentions</td>
+                        <td id="detail-mentiones"></td>
+                    </tr>
+                    <tr>
+                        <td>Area of Expertise</td>
+                        <td id="detail-area-of-expertise"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
         <div  class="container-fluid" id="table"></div>
     </body>
-</html>]]>
+</html>
+
+
+]]>
   </Content> 
 </Module>
