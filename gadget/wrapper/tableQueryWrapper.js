@@ -52,7 +52,10 @@ var TableQueryWrapper = function(query, container, options, select, where) {
     $("table.google-visualization-table-table").addClass(
         'table table-bordered'
     );
-    $("table.google-visualization-table-table").parent('div').addClass('table-responsive')
+    $("table.google-visualization-table-table").parent('div').addClass('table-responsive');
+    $('html, body').animate({
+        scrollTop: $("#table").offset().top
+    }, 500);
   });
 
   options = options || {};
